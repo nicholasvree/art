@@ -53,6 +53,14 @@ export default {
           url: '/signup',
           data: signUpInfo
         })
-      }
+      },
+  
+  getCurrentUserId: function(){
+
+    return axios({
+      method: 'get',
+      url: '/api/currentUserId'
+    })
+  }
 
 };

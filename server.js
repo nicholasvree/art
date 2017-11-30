@@ -28,10 +28,6 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(flash());
 
-app.use(expressSession({secret: 'mySecretKey'}));
-app.use(passport.initialize());
-app.use(passport.session());
-
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
 // Connect to the Mongo DB
@@ -46,33 +42,18 @@ var db=require("./models")
 
 require("./routes/controller.js")(app);
 
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
- 
-passport.deserializeUser(function(id, done) {
-  db.User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
 
 
 passport.use('login', new LocalStrategy(
 function(username, password, done) {
 
-  console.log("strat used", username, password)
-
-
+  console.log("STRATEGY USED", username, password)
 
   db.User.findOne({ username: username }, function (err, user) {
 
-    // console.log("dbUserFindone" , user, err)
-
-    
+  
     if (err) { return done(err); console.log("err", err) }
     if (!user) {
-      console.log("diffuser")
       
       return done(null, false, { message: 'Incorrect email.' });
     }
@@ -81,14 +62,17 @@ function(username, password, done) {
       
       return done(null, false, { message: 'Incorrect password.' });
     }
-
-    console.log(user)
+    console.log("RETURNED USER", user)
     
     return done(null, user);
 
   });
 }
 ));
+
+
+
+
 
 passport.use('signup', new LocalStrategy({
   passReqToCallback : true
@@ -139,6 +123,17 @@ function(req, username, password, done) {
 )
 
 
+passport.serializeUser(function(user, done) {
+  console.log("SERIALIZED CALLED ZZZZZZZzzzzzzz")
+  done(null, user._id);
+  
+});
+ 
+passport.deserializeUser(function(id, done) {
+  db.User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 
 
