@@ -1,0 +1,20 @@
+.well {
+    max-height: 250px;
+    max-width:250px;
+    padding-bottom: 100px;
+    margin:10px
+  }
+
+  .caption {
+    font-size:10px;
+  }
+
+  .selected-image{
+    max-width:350px;
+    min-width:250px;
+    margin-top:30px
+
+  }
+
+
+  

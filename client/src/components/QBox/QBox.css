@@ -1,0 +1,7 @@
+.affixed-question{
+  margin-top:10;
+  background-color: coral;
+  min-width:100%;
+  position:relative;
+  z-index:100
+}
