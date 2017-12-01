@@ -1,6 +1,8 @@
 import React from 'react';
 import API from "../utils/API";
 import ScavengerHunt from "../components/ScavengerHunt/ScavengerHunt"
+import { Redirect } from "react-router-dom";
+
 
 
 class GamePlay extends React.Component {
@@ -10,8 +12,10 @@ class GamePlay extends React.Component {
         selectedCollection: "8",
         collectedImages: [],
         hunt: {},
+        numClues:0,
         currentClue:0,
-        score:0
+        score:0,
+        gameOver: false
         };
 
     componentDidMount(){
@@ -24,6 +28,7 @@ class GamePlay extends React.Component {
     API.getHunt(this.state.selectedCollection)
     .then(res=> {
         this.setState({hunt: res.data})
+        this.setState({numClues: this.state.hunt[0].clue.length})
     })
     .catch(err =>console.log(err))        
     };
@@ -38,6 +43,8 @@ class GamePlay extends React.Component {
 
 
     processAnswer = event => {
+
+        if(this.state.currentClue <= this.state.numClues){
 
             console.log(this.state.hunt)
     
@@ -54,14 +61,32 @@ class GamePlay extends React.Component {
             this.setState({currentClue: this.state.currentClue+1})
 
             console.log(this.state.score)
-
-    
         }
+        else{
+
+            let scoreData = {
+                total_correct: this.state.score,
+                total_questions: this.state.numClues,
+                hunt: this.state.hunt[0]._id
+            }
+
+            API.saveScore(scoreData)
+
+        }
+    }
 
 
       
 
     render() {
+
+        console.log(this.state.hunt)
+        console.log(this.state.numClues)
+
+        if (!this.props.userEmail) {
+            return <Redirect to='/login' />;
+          } 
+        
         
         return (
             <div>
@@ -72,7 +97,9 @@ class GamePlay extends React.Component {
                         hunt = {this.state.hunt}
                         currentClue = {this.state.currentClue}
                         processAnswer = {this.processAnswer}
-                        score = {this.state.score} />
+                        score = {this.state.score}
+                        numClues = {this.state.numClues}
+                        gameOver = {this.state.gameOver} />
                     </div>
                 </div>
         );

@@ -6,6 +6,7 @@
 module.exports = {
     Hunt: require("./hunt"),
     Clue: require("./clue"),
-    User: require("./user")
+    User: require("./user"),
+    Score: require("./score")
   };
   

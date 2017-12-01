@@ -3,14 +3,10 @@ var db = require("../models");
 var passport = require('passport')
 var flash = require('connect-flash');
 
-
-
 module.exports = function(app) {
 
+//Retrieves Hunt with populated Clues
     app.get("/api/hunt/:huntId", function(req, res){
-
-        console.log("99999", req.session.passport.user)
-
         db.Hunt
         .find({category: req.params.huntId})
         .populate("clue")
@@ -24,7 +20,21 @@ module.exports = function(app) {
         })
     })
 
+//On completing a Hunt, saves score to database for user
+    app.post('/api/saveScore', function(req, res){
+        db.Score
+        .create(req.body)
+        .then(function(dbScore){
+            res.json(dbScore)
+            return db.User.findOneAndUpdate({_id: req.session.passport.user}, {$push: {score: dbScore._id}}, {new: true});
+        })
+        .catch(function(err){
+            console.log(err)
+            res.json(err)
+        })
+    })
 
+//GHETTO WAY to post Hunts
     app.post("/api/hunt/:id", function(req, res){
         db.Hunt
         .create({title: "Contemporary Art", category: 8})
@@ -36,11 +46,11 @@ module.exports = function(app) {
             console.log(err)
         })
     })
-    
+
+//GHETTO WAY to post Clues
     app.post("/api/clue/:huntId", function(req, res){
 
         console.log(req.body)
-
 
         db.Clue
         .create(req.body)
@@ -55,56 +65,79 @@ module.exports = function(app) {
         })
     })
 
-    app.post("api/score/:userId", function(req, res){
-        console.log(req.body)
-        db.Score
-        .create(req.body)
-        .then(function(dbScore){
-            console.log(dbScore)
-            res.json(dbScore)
-            return db.User.findOneAndUpdate({user: req.params.userId}, {$push: {score: dbScore._id}}, {new: true});
-        })
-        .catch(function(err){
-            res.json(err)
-            console.log(err)
-        })
-    })
+// //AUTH Login
+//     app.post('/login',
+//     passport.authenticate('login', { successRedirect: '/',
+//                                      failureRedirect: '/',
+//                                      failureFlash: false }), 
+//                                      function(req,res){
+//                                          res.json(res)
+//                                      }
+//   );
 
-    app.get("/", function(req,res){
-        console.log("redirected")
-        res.json("true")
-    })
+  app.post('/login', function (req, res, next) {
+    passport.authenticate('login', function (err, user, info) {
+        if (err) {
+            console.log("FROM LOGIN", err)
+            return next(err);
+        }
+        if (!user) {
+            console.log("Incorrect username/password")
+            return res.json("Incorrect username/password")
+
+        }
+        req.logIn(user, function (err) {
+                if (err) {
+                    return next(err);
+                    console.log(err)
+                }
+                    console.log("LOGGED IN")
+                    return res.send(req.user);
+            });
+    })(req, res, next);
+});
+
+//AUTH Register
+    app.post('/signup', function(req,res,next){
+        passport.authenticate('signup', function (err, user, info) {
+            if (err) {
+                console.log("FROM Registration", err)
+                return next(err);
+            }
+            req.logIn(user, function (err) {
+                if (err) {
+                    return next(err);
+                    console.log(err)
+                }
+                    console.log("LOGGED IN")
+                    return res.send(req.user);
+            });
+    })(req, res, next);
+});
 
 
-    app.post('/login',
-    passport.authenticate('login', { successRedirect: '/',
-                                     failureRedirect: '/',
-                                     failureFlash: false }), 
-                                     function(req,res){
-                                         res.redirect('/')
+//AUTH Logout
+      app.get('/logout', function(req, res){
+        req.logout();
+        req.session.destroy(function (err) {
+            if (err) { return next(err); }
+            // The response should indicate that the user is no longer authenticated.
+            return res.send(req.user);
+          });
+      });
 
-                                     }
-  );
-
-
-    app.post('/signup', passport.authenticate('signup', {
-        successRedirect: '/home',
-        failureRedirect: '/signup',
-        failureFlash : true 
-      }));
-
-
+//AUTH retrieves current USER ID
     app.get('/api/currentUserId', function(req, res){
-        let currentUserId = req.session.passport.user
+        // console.log("CHECK USERID" , req.session.passport.user)
 
-        db.User.findById(currentUserId)
+        db.User.findById(req.session.passport.user)
         .then(function(dbCurrentUser){
             console.log("66666", dbCurrentUser)
             res.json(dbCurrentUser)
         })
         .catch(function(err){
-            console.log(err)
-            res.json(err)
+            console.log("CONTROLLER - checkUserId", err)
+           // res.json(err)
         })
     })
 

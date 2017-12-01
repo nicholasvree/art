@@ -19,23 +19,16 @@ class ScavengerHunt extends React.Component {
 
         let imageId=event.target.value
 
-
         API.getImageInfo(imageId)
         .then(res => {this.setState({selectedImageInfo: res.data.data, isOpen: !this.state.isOpen})})
         .catch(err => console.log(err))
-      };
+    };
 
-
-
-    
-    
     closeModal = () => {
-    this.setState({
-        isOpen: !this.state.isOpen
-    });
+        this.setState({
+            isOpen: !this.state.isOpen
+        })
     }
-
-
 
     getSafe(fn) {
         try {
@@ -45,19 +38,10 @@ class ScavengerHunt extends React.Component {
         }
     }
 
-
-
-
-  render() {
-
-
+    render() {
     const collectedImages = this.props.collectedImages
-    
-    const elementImages = collectedImages.map(image => {
-
-        
-            
-            return(
+    const elementImages = collectedImages.map(image => {    
+        return(
             <div key={image.id}>
                 <div   className="col-md-3 well text-center">
                     <div className="card">
@@ -75,18 +59,16 @@ class ScavengerHunt extends React.Component {
                     </div>
                 </div>
             </div>
-            ) 
+        ) 
     }) 
 
 
-    return (
-        <div>
-
-            
+        return (
+        <div>        
             <div className="container">
                 <div className="row">
                 <div className="col-md-11">
-                <QBox hunt={this.props.hunt} currentClue={this.props.currentClue}/>
+                <QBox hunt={this.props.hunt} currentClue={this.props.currentClue} gameOver={this.props.gameOver}/>
                 </div>
                 </div>
 
@@ -94,36 +76,32 @@ class ScavengerHunt extends React.Component {
                     {elementImages}
                 </div>
             </div>
-          
-        
-        
-
-        <Modal show={this.state.isOpen}
-                    onClose={this.closeModal}>
-                    <div className="container">
-                    <div className="row">
-                        <div className="col-md-4 text-center">
-                            <img className="selected-image" alt={this.state.selectedImageInfo.title} src ={this.getSafe( () => "http://" + this.state.selectedImageInfo.images[0].largest_derivative_url)}></img>
-                            {/* Needs to be parsed into HTML? */}
-                            <p className="caption">{ this.getSafe( () =>  this.state.selectedImageInfo.images[0].caption) }</p>
+            
+            <Modal show={this.state.isOpen}
+                        onClose={this.closeModal}>
+                        <div className="container">
+                        <div className="row">
+                            <div className="col-md-4 text-center">
+                                <img className="selected-image" alt={this.state.selectedImageInfo.title} src ={this.getSafe( () => "http://" + this.state.selectedImageInfo.images[0].largest_derivative_url)}></img>
+                                {/* Needs to be parsed into HTML? */}
+                                <p className="caption">{ this.getSafe( () =>  this.state.selectedImageInfo.images[0].caption) }</p>
+                            </div>
+                            <div className="col-md-6">
+                                <h1> {this.getSafe ( () => this.state.selectedImageInfo.title)} </h1>
+                                    <h3> {this.getSafe( () => this.state.selectedImageInfo.artists[0].name)} </h3> 
+                                    <h5> {this.getSafe( () => this.state.selectedImageInfo.artists[0].dates)}</h5> 
+                                        {/* Needs to be parsed into HTML */}
+                                        <p>{this.getSafe( () => this.state.selectedImageInfo.labels[0].content) }  </p> 
+                                        <p> <strong> MEDIUM </strong>   {this.getSafe ( () => this.state.selectedImageInfo.medium)} </p>
+                                        <p> <strong> DATES </strong>   {this.getSafe ( () => this.state.selectedImageInfo.object_date ) } </p>
+                                        <p> <strong> DIMENSIONS </strong>   { this.getSafe ( () => this.state.selectedImageInfo.dimensions)} </p>
+                            </div>
+                            </div>
                         </div>
-                        <div className="col-md-6">
-                            <h1> {this.getSafe ( () => this.state.selectedImageInfo.title)} </h1>
-                                <h3> {this.getSafe( () => this.state.selectedImageInfo.artists[0].name)} </h3> 
-                                <h5> {this.getSafe( () => this.state.selectedImageInfo.artists[0].dates)}</h5> 
-                                    {/* Needs to be parsed into HTML */}
-                                    <p>{this.getSafe( () => this.state.selectedImageInfo.labels[0].content) }  </p> 
-                                    <p> <strong> MEDIUM </strong>   {this.getSafe ( () => this.state.selectedImageInfo.medium)} </p>
-                                    <p> <strong> DATES </strong>   {this.getSafe ( () => this.state.selectedImageInfo.object_date ) } </p>
-                                    <p> <strong> DIMENSIONS </strong>   { this.getSafe ( () => this.state.selectedImageInfo.dimensions)} </p>
-
-                        </div>
-                        </div>
-                    </div>
-                </Modal>
-            </div> 
-    );
-  }
+                    </Modal>
+                </div> 
+        );
+    }
 }
 
 export default ScavengerHunt;

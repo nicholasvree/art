@@ -1,46 +1,24 @@
 import React from 'react';
 import API  from '../utils/API'
+import { Redirect } from "react-router-dom";
+
 
 class Register extends React.Component {
 
-    state = {
-        name: "",
-        email: "",
-        password: ""
-    }
-
-    handleInputChange = event => {
-        // Getting the value and name of the input which triggered the change
-        const { name, value } = event.target;
-    
-        // Updating the input's state
-        this.setState({
-          [name]: value
-        });
-
-      };
-
-      handleSubmit = event => {
-        
-                console.log("sign up clicked")
-                  event.preventDefault();
-        
-                  API.signUp({username: this.state.email, email:this.state.email,  password: this.state.password})
-        
-        
-              }
-
-    
-
   render() {
+
+    if (this.props.userEmail) {
+      return <Redirect to='/gameplay' />;
+    } 
+
     return (
         <div class="register">
         <h1>Register</h1>
-          <p><input value={this.state.name} type="text" name="name"  onChange={this.handleInputChange} placeholder="name"/></p>
-          <p><input value={this.state.email} type="text" name="email" onChange={this.handleInputChange} placeholder="email"/></p>
-          <p><input value={this.state.password} type="text" name="password" onChange={this.handleInputChange}  placeholder="password"/></p>
+          <p><input value={this.props.registerName} type="text" name="registerName"  onChange={this.props.handleInputChange} placeholder="name"/></p>
+          <p><input value={this.props.registerEmail} type="text" name="registerEmail" onChange={this.handleInputChange} placeholder="email"/></p>
+          <p><input value={this.props.registerPassword} type="text" name="registerPassword" onChange={this.props.handleInputChange}  placeholder="password"/></p>
 
-          <p class="submit"><input type="submit" name="commit" onClick={this.handleSubmit} value="Register"/></p>
+          <p class="submit"><input type="submit" name="commit" onClick={this.props.handleRegisterSubmit} value="Register"/></p>
         </div>
         
     );

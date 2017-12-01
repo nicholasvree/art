@@ -25,13 +25,13 @@ export default {
     return axios.get('/api/hunt/' + huntId)
   },
 
-  saveScore: function(userId, dataPack){
-    return axios({
-      method: 'post',
-      url: '/api/scores/' + userId,
-      data: dataPack
-    });
-  },
+  // saveScore: function(userId, dataPack){
+  //   return axios({
+  //     method: 'post',
+  //     url: '/api/scores/' + userId,
+  //     data: dataPack
+  //   });
+  // },
 
   login: function(loginInfo){
 
@@ -54,12 +54,28 @@ export default {
           data: signUpInfo
         })
       },
+
+    logout: function(){
+      return axios({
+        method: 'get',
+        url: '/logout'
+      })
+    },
   
   getCurrentUserId: function(){
 
     return axios({
       method: 'get',
       url: '/api/currentUserId'
+    })
+  },
+
+  saveScore: function(scoreData){
+
+    return axios({
+      method: 'post',
+      url: '/api/saveScore',
+      data: scoreData
     })
   }
 

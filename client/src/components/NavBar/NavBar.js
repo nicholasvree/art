@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
+import API from '../../utils/API'
+
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
 
 
 class NavBar extends React.Component {
-  
-
   
     render() {
   
@@ -37,6 +37,7 @@ class NavBar extends React.Component {
         </li>
       </ul>
       {this.props.userEmail}
+      <button onClick={this.props.handleLogoutSubmit}>LOGOUT</button>
     </div>
     <div className="container-fluid">
       
