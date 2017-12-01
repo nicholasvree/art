@@ -26,6 +26,7 @@ class App extends Component {
     userEmail:null,
     userId: null,
   }
+  
 ////////////////////SHARED////////////////////////////
 
   componentDidMount(){ 
