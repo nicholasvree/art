@@ -34,7 +34,7 @@ module.exports = function(app) {
         })
     })
 
-//GHETTO WAY to post Hunts
+//POSTMAN WAY to post Hunts
     app.post("/api/hunt/:id", function(req, res){
         db.Hunt
         .create({title: "Contemporary Art", category: 8})
@@ -47,7 +47,7 @@ module.exports = function(app) {
         })
     })
 
-//GHETTO WAY to post Clues
+//POSTMAN WAY to post Clues
     app.post("/api/clue/:huntId", function(req, res){
 
         console.log(req.body)
@@ -65,16 +65,7 @@ module.exports = function(app) {
         })
     })
 
-// //AUTH Login
-//     app.post('/login',
-//     passport.authenticate('login', { successRedirect: '/',
-//                                      failureRedirect: '/',
-//                                      failureFlash: false }), 
-//                                      function(req,res){
-//                                          res.json(res)
-//                                      }
-//   );
-
+//AUTH Login
   app.post('/login', function (req, res, next) {
     passport.authenticate('login', function (err, user, info) {
         if (err) {
@@ -121,14 +112,12 @@ module.exports = function(app) {
         req.logout();
         req.session.destroy(function (err) {
             if (err) { return next(err); }
-            // The response should indicate that the user is no longer authenticated.
             return res.send(req.user);
           });
       });
 
-//AUTH retrieves current USER ID
+//AUTH retrieves current USER info
     app.get('/api/currentUserId', function(req, res){
-        // console.log("CHECK USERID" , req.session.passport.user)
 
         db.User.findById(req.session.passport.user)
         .then(function(dbCurrentUser){
