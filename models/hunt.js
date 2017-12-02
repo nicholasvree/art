@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const huntSchema = new Schema({
     title: { type: String, required: true },
     category: { type: Number, required: true},
+    picture:{ type:String},
     clue:[{
         type: Schema.Types.ObjectId,
         ref: "Clue"

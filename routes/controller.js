@@ -5,6 +5,20 @@ var flash = require('connect-flash');
 
 module.exports = function(app) {
 
+//Gets a list of Hunts
+    app.get("/api/hunt", function(req,res){
+        db.Hunt
+        .find({})
+        .then(function(dbHunt){
+            console.log(dbHunt)            
+            res.json(dbHunt)
+        })
+        .catch(function(err){
+            console.log(err)
+            res.json(err)
+        })
+    })
+
 //Retrieves Hunt with populated Clues
     app.get("/api/hunt/:huntId", function(req, res){
         db.Hunt
@@ -12,10 +26,8 @@ module.exports = function(app) {
         .populate("clue")
         .then(function(dbHunt){
             res.json(dbHunt)
-            console.log(dbHunt)
         })
         .catch(function(err){
-            console.log(err)
             res.json(err)
         })
     })
@@ -29,7 +41,6 @@ module.exports = function(app) {
             return db.User.findOneAndUpdate({_id: req.session.passport.user}, {$push: {score: dbScore._id}}, {new: true});
         })
         .catch(function(err){
-            console.log(err)
             res.json(err)
         })
     })
@@ -37,31 +48,26 @@ module.exports = function(app) {
 //POSTMAN WAY to post Hunts
     app.post("/api/hunt/:id", function(req, res){
         db.Hunt
-        .create({title: "Contemporary Art", category: 8})
+        .create(req.body)
         .then(function(dbHunt){
             res.json(dbHunt)
-            console.log(dbHunt)
         })
         .catch(function(err){
-            console.log(err)
         })
     })
 
 //POSTMAN WAY to post Clues
     app.post("/api/clue/:huntId", function(req, res){
 
-        console.log(req.body)
 
         db.Clue
         .create(req.body)
         .then(function(dbClue){
-            console.log(dbClue)
             res.json(dbClue)
              return db.Hunt.findOneAndUpdate({ category: req.params.huntId }, {$push: {clue: dbClue._id }}, { new: true });
         })
         .catch(function(err){
             res.json(err)
-            console.log(err)
         })
     })
 
@@ -69,20 +75,16 @@ module.exports = function(app) {
   app.post('/login', function (req, res, next) {
     passport.authenticate('login', function (err, user, info) {
         if (err) {
-            console.log("FROM LOGIN", err)
             return next(err);
         }
         if (!user) {
-            console.log("Incorrect username/password")
             return res.json("Incorrect username/password")
 
         }
         req.logIn(user, function (err) {
                 if (err) {
                     return next(err);
-                    console.log(err)
                 }
-                    console.log("LOGGED IN")
                     return res.send(req.user);
             });
     })(req, res, next);
@@ -92,15 +94,12 @@ module.exports = function(app) {
     app.post('/signup', function(req,res,next){
         passport.authenticate('signup', function (err, user, info) {
             if (err) {
-                console.log("FROM Registration", err)
                 return next(err);
             }
             req.logIn(user, function (err) {
                 if (err) {
                     return next(err);
-                    console.log(err)
                 }
-                    console.log("LOGGED IN")
                     return res.send(req.user);
             });
     })(req, res, next);
@@ -121,11 +120,9 @@ module.exports = function(app) {
 
         db.User.findById(req.session.passport.user)
         .then(function(dbCurrentUser){
-            console.log("66666", dbCurrentUser)
             res.json(dbCurrentUser)
         })
         .catch(function(err){
-            console.log("CONTROLLER - checkUserId", err)
            // res.json(err)
         })
     })

@@ -3,6 +3,7 @@ import './ScavengerHunt.css'
 import Modal from '../Modal/Modal'
 import API from '../../utils/API'
 import QBox from '../QBox/QBox'
+import PictureBox from '../PictureBox/PictureBox'
 import {Button, ButtonToolbar} from 'react-bootstrap'
 
 
@@ -11,14 +12,13 @@ class ScavengerHunt extends React.Component {
 
     state = { 
                 isOpen: false,
-                selectedImageInfo: "x",
+                selectedImageInfo: '',
                 score:0
              };
 
+/////////////////Modal////////////////
     openModal = event => {
-
         let imageId=event.target.value
-
         API.getImageInfo(imageId)
         .then(res => {this.setState({selectedImageInfo: res.data.data, isOpen: !this.state.isOpen})})
         .catch(err => console.log(err))
@@ -29,7 +29,7 @@ class ScavengerHunt extends React.Component {
             isOpen: !this.state.isOpen
         })
     }
-
+////////////GENERAL///////////////////////
     getSafe(fn) {
         try {
             return fn();
@@ -42,33 +42,17 @@ class ScavengerHunt extends React.Component {
     const collectedImages = this.props.collectedImages
     const elementImages = collectedImages.map(image => {    
         return(
-            <div key={image.id}>
-                <div   className="col-md-3 well text-center">
-                    <div className="card">
-                        <div className="img-container">
-                            <img alt = {image.title} src = {"https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2_sq/" + image.primary_image}/>
-                            <p>{image.caption}</p>
-                        </div>
-                        <div className="content">
-                                    {image.title}
-                        </div>
-                        <ButtonToolbar>
-                            <Button bsSize="small"  value={image.id}  onClick={this.openModal} block>Read More</Button>
-                            <Button bsSize="small" value={image.id}  onClick={this.props.processAnswer} block>Select Answer</Button>
-                        </ButtonToolbar>
-                    </div>
-                </div>
-            </div>
+            <PictureBox image={image} openModal={this.openModal} closeModal={this.closeModal} processAnswer={this.props.processAnswer} />
         ) 
     }) 
 
-
+    console.log("SCVNGHJSS", this.state)
         return (
         <div>        
             <div className="container">
                 <div className="row">
                 <div className="col-md-11">
-                <QBox hunt={this.props.hunt} currentClue={this.props.currentClue} gameOver={this.props.gameOver}/>
+                <QBox hunt={this.props.hunt} currentClue={this.props.currentClue} gameOver={this.props.gameOver} qDisplay={this.props.qDisplay}  qButton={this.props.qButton} handleQBoxButton={this.props.handleQBoxButton}/>
                 </div>
                 </div>
 

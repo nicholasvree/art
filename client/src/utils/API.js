@@ -21,17 +21,14 @@ export default {
     })
   },
 
+  getHuntList: function(){
+    return axios.get('/api/hunt')
+  },
+
   getHunt: function(huntId){
     return axios.get('/api/hunt/' + huntId)
   },
 
-  // saveScore: function(userId, dataPack){
-  //   return axios({
-  //     method: 'post',
-  //     url: '/api/scores/' + userId,
-  //     data: dataPack
-  //   });
-  // },
 
   login: function(loginInfo){
 

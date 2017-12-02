@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Affix from 'react-overlays/lib/Affix';
+import {Button, ButtonToolbar} from 'react-bootstrap'
 import './QBox.css'
 
 
@@ -13,16 +14,10 @@ class QBox extends Component {
     }
   }
 
-  
 
   render() {
 
-    console.log("QBOX HUNT", this.props.hunt)
-
-    let qDisplay=this.getSafe( () => this.props.hunt[0].clue[this.props.currentClue].clue)
-
-    console.log("QDISPLAY", qDisplay)
-
+    // let qDisplay=this.getSafe( () => this.props.hunt[0].clue[this.props.currentClue].clue)
 
     return (
       <div className='affixed-question'>
@@ -31,13 +26,11 @@ class QBox extends Component {
             <div className='panel-body'>
               <div className="row">
                 <div className="col-md-9">
-                {qDisplay}
+                {this.props.qDisplay}
                  </div>
                  <div className="col-md-3">
-                  <button> TEST BUTTON </button>
+                  <Button value={this.props.qButton} onClick={this.props.handleQBoxButton}> {this.props.qButton}  </Button>
                 </div>
-
-
             </div>
             </div>
           </div>

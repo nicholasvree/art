@@ -1,0 +1,48 @@
+{"clue_order":0, 
+"clue": "", 
+"button1": "Start Game",
+"button2": "Start Game"
+}
+
+{"clue_order":1, 
+    "clue": "In this painting, the artist painstakingly describes the geometry created by a patterned parquet floor strewn with articles of clothing.", 
+    "answer": 2216,
+    "button1": "Skip",
+    "button2": "Continue",
+    "correct_message": "Correct! Keep Going",
+    "wrong_message": "Incorrect! Better Luck Next Time"
+    }
+
+{"clue_order":2, 
+    "clue": "The artists depicts a young African American girl in bold silhouette, holding the decapitated head of a chicken in one hand, while in the other she nonchalantly twirls a large key.", 
+    "answer": 157809,
+    "button1": "Skip",
+    "button2": "Continue",
+    "correct_message": "Correct! Keep Going",
+    "wrong_message": "Incorrect! Better Luck Next Time"
+    }
+
+{"clue_order":3, 
+    "clue": "For this particular sculpture, the artists made a fiberglass mold of his own body and then pierced the work with nails.", 
+    "answer": 173961,
+    "button1": "Skip",
+    "button2": "Continue",
+    "correct_message": "Correct! Keep Going",
+    "wrong_message": "Incorrect! Better Luck Next Time"
+    }
+
+{"clue_order":4, 
+    "clue": "The artist applied a number of horizontal brushstrokes loaded with thinned paint at the top of the canvas, and the paint streamed down in lines, drips, and rivulets.", 
+    "answer": 1948,
+    "button1": "Skip",
+    "button2": "Take Me There!",
+    "correct_message": "Correct!  That was the last question!  Let's see your score!",
+    "wrong_message": "That was the last question!  Let's see your score!"
+}
+        
+{"clue_order":5, 
+    "clue": "Game Over!", 
+    "button1": "Ok, Go Back.",
+}
+
+

@@ -4,9 +4,13 @@ var Schema = mongoose.Schema;
 
 
 var ClueSchema = new Schema({
-    clue:{type: String, required:true},
-    clue_order:{type: Number, required:true},
-    answer:{type:String, required:true}
+    clue_order:{type: Number},    
+    clue:{type: String},
+    answer:{type:String},
+    button1:{type:String},
+    button2:{type:String},
+    correct_message:{type:String},
+    wrong_message:{type:String}   
 });
 
 var Clue = mongoose.model("Clue", ClueSchema);
