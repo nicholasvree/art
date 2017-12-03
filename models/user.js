@@ -8,6 +8,10 @@ const userSchema = new Schema({
     score:[{
         type: Schema.Types.ObjectId,
         ref: "Score"
+    }],
+    image: [{
+        type: Schema.Types.ObjectId,
+        ref: "Image"
     }]
 });
 

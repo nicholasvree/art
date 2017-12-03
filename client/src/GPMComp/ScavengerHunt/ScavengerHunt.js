@@ -1,9 +1,9 @@
 import React from 'react';
 import './ScavengerHunt.css'
-import Modal from '../Modal/Modal'
+import Modal from '../../components/Modal/Modal'
 import API from '../../utils/API'
-import QBox from '../QBox/QBox'
-import PictureBox from '../PictureBox/PictureBox'
+import QBox from '../../components/QBox/QBox'
+import PictureBox from '../../components/PictureBox/PictureBox'
 import {Button, ButtonToolbar} from 'react-bootstrap'
 
 

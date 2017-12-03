@@ -21,6 +21,30 @@ export default {
     })
   },
 
+  getSavedImages: function(){
+    return axios.get('/api/saveimage')
+  },
+
+  searchImages: function(searchTerm){
+    return axios({
+      method:'get',
+      url:'https://www.brooklynmuseum.org/api/v2/object?has_images=1&limit=35&keyword=' + searchTerm,
+      headers:{api_key: 'gRQWiRBHmPfTBibPQSZKBZwANjcZqfHC'}
+    })
+  },
+
+  retrieveSavedImages: function(){
+    return axios.get('/api/saveimage')
+  },
+
+  saveImage: function(imageInfo){
+    return axios({
+      method: 'post',
+      url: '/api/saveimage',
+      data: imageInfo
+    })
+  },
+
   getHuntList: function(){
     return axios.get('/api/hunt')
   },

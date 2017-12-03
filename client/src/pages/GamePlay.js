@@ -1,7 +1,15 @@
 import React from 'react';
 import API from "../utils/API";
-import ScavengerHunt from "../components/ScavengerHunt/ScavengerHunt"
-import ChooseHunt from "../components/ChooseHunt/ChooseHunt"
+import ScavengerHunt from "../GPMComp/ScavengerHunt/ScavengerHunt"
+import ChooseHunt from "../GPMComp/ChooseHunt/ChooseHunt"
+import HuntScore from "../GPMComp/HuntScore/HuntScore"
+import Draw from "../GPMComp/Draw/Draw"
+import Reflect from "../GPMComp/Reflect/Reflect"
+import Collector from "../GPMComp/Collector/Collector"
+import Collection from "../GPMComp/Collection/Collection"
+
+
+
 import { Redirect } from "react-router-dom";
 
 
@@ -9,7 +17,7 @@ import { Redirect } from "react-router-dom";
 class GamePlay extends React.Component {
 
     state = {
-        activeComp:ChooseHunt,
+        activeComp: "choose",
         selectedCollection: "8",
         collectedImages: [],
         huntList: [],
@@ -20,8 +28,12 @@ class GamePlay extends React.Component {
         gameOver: false,
 
         qDisplay: "",
-        qButton: ""
+        qButton: "", 
+
+        searchBoxValue: "dddd"
         };
+
+
 
     componentDidMount(){
 
@@ -42,6 +54,13 @@ class GamePlay extends React.Component {
      
     };
 
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+          [name]: value
+        });
+      };
+
     getSafe(fn) {
         try {
             return fn();
@@ -52,7 +71,10 @@ class GamePlay extends React.Component {
 
 
     processAnswer = event => {
-        if(event.target.value === this.state.hunt[0].clue[this.state.currentClue].answer){
+
+        let imageValue = event.target.value.split("|")
+
+        if(imageValue[0] === this.state.hunt[0].clue[this.state.currentClue].answer){
             this.setState({
                 score: this.state.score +1,
                 qDisplay: this.getSafe( () => this.state.hunt[0].clue[this.state.currentClue].correct_message),
@@ -90,7 +112,7 @@ class GamePlay extends React.Component {
             )
         }
         else if (event.target.value === "Take Me There!"){
-            this.setState({activeGame:false, currentClue: 0})
+            this.setState({activeComp:"score", currentClue: 0})
             this.gameOver()
         }
         else {
@@ -107,7 +129,7 @@ class GamePlay extends React.Component {
         .then(res=> {
             this.setState({hunt: res.data}, () => {
                 this.setState({qDisplay: this.state.hunt[0].clue[0].clue, qButton: this.state.hunt[0].clue[0].button1})
-                this.setState({activeGame:true})
+                this.setState({activeComp:"scavHunt"})
             })
             
         })
@@ -115,8 +137,14 @@ class GamePlay extends React.Component {
 
     }
 
+    backToChooseHunt = () => {
+        this.setState({activeComp:"choose"})
+    }
 
-      
+    toGPMC = (event) => {
+        this.setState({activeComp:event.target.value})
+    }
+
 
     render() {
 
@@ -124,11 +152,17 @@ class GamePlay extends React.Component {
         if (!this.props.userEmail) {
             return <Redirect to='/login' />;
           } 
-         
-        return (
-            <div>
-                    <div className="container">
-                        {this.state.activeGame ? <ScavengerHunt 
+
+        let activeCompElement;
+        
+        if(this.state.activeComp === "choose"){
+            activeCompElement = <ChooseHunt 
+                            huntList={this.state.huntList} 
+                            startCategory={this.startCategory}
+                            toGPMC={this.toGPMC}/>  
+        }
+        else if(this.state.activeComp === "scavHunt"){
+            activeCompElement = <ScavengerHunt 
                         selectedCollection = {this.state.selectedCollection} 
                         collectedImages = {this.state.collectedImages} 
                         hunt = {this.state.hunt}
@@ -139,9 +173,64 @@ class GamePlay extends React.Component {
                         qDisplay={this.state.qDisplay}
                         qButton={this.state.qButton}
                         handleQBoxButton = {this.handleQBoxButton}
-                        /> : <ChooseHunt huntList={this.state.huntList} startCategory={this.startCategory}/>}
+                        />
+        }
+        else if(this.state.activeComp === "score"){
+            activeCompElement=<HuntScore
+                                score={this.state.score}
+                                outOf={this.state.hunt[0].clue.length-2}
+                                backToChooseHunt={this.backToChooseHunt} />
+
+        }
+        else if(this.state.activeComp==="draw"){
+            activeCompElement=<Draw
+                                backToChooseHunt={this.backToChooseHunt}/>
+
+        }
+        else if(this.state.activeComp==="reflect"){
+            activeCompElement=<Reflect
+            backToChooseHunt={this.backToChooseHunt}/>
+        }
+        else if(this.state.activeComp==="collector"){
+            activeCompElement=<Collector
+            handleInputChange={this.handleInputChange}
+            searchBoxValue={this.state.searchBoxValue}
+            backToChooseHunt={this.backToChooseHunt}/>
+        }
+        else if(this.state.activeComp==="collection"){
+            activeCompElement=<Collection
+            backToChooseHunt={this.backToChooseHunt}/>
+        }
+            
+
+        console.log("ACTIVE", activeCompElement, "STATE", this.state.activeComp)
 
 
+        
+
+        //     case "choose":
+        //         return(<ChooseHunt huntList={this.state.huntList} startCategory={this.startCategory}/>)
+        //         break
+        //     case "hunt":
+        //         return(<ScavengerHunt 
+        //             selectedCollection = {this.state.selectedCollection} 
+        //             collectedImages = {this.state.collectedImages} 
+        //             hunt = {this.state.hunt}
+        //             currentClue = {this.state.currentClue}
+        //             processAnswer = {this.processAnswer}
+        //             score = {this.state.score}
+        //             gameOver = {this.state.gameOver} 
+        //             qDisplay={this.state.qDisplay}
+        //             qButton={this.state.qButton}
+        //             handleQBoxButton = {this.handleQBoxButton}
+        //             /> )
+        //         break
+        // }}
+         
+        return (
+            <div>
+                    <div className="container">
+                         {activeCompElement} 
                     </div>
                 </div>
         );

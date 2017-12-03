@@ -18,7 +18,7 @@ class PictureBox extends React.Component {
                 </div>
                 <ButtonToolbar>
                     <Button bsSize="small"  value={this.props.image.id}  onClick={this.props.openModal} block>Read More</Button>
-                    <Button bsSize="small" value={this.props.image.id}  onClick={this.props.processAnswer} block>Select Answer</Button>
+                    <Button bsSize="small" value={this.props.image.id+"|"+this.props.image.title+"|"+this.props.image.primary_image}  onClick={this.props.processAnswer} block>Select Answer</Button>
                 </ButtonToolbar>
             </div>
         </div>

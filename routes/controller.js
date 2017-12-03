@@ -45,6 +45,33 @@ module.exports = function(app) {
         })
     })
 
+//Saves essential Image info to DB for user
+app.post('/api/saveimage', function(req, res){
+    db.Image
+    .create(req.body)
+    .then(function(dbImage){
+        res.json(dbImage)
+        console.log(req.session.passport.user)
+        return db.User.findOneAndUpdate({_id: req.session.passport.user}, {$push: {image: dbImage._id}}, {new: true});
+    })
+    .catch(function(err){
+        res.json(err)
+    })
+})
+
+app.get('/api/saveimage', function(req, res){
+    db.User
+    .findOne({_id: req.session.passport.user})
+    .populate("image")
+    .then(dbUser => {
+        res.json(dbUser)
+    })
+    .catch(function(err){
+        res.json(err)
+    })
+})
+
+
 //POSTMAN WAY to post Hunts
     app.post("/api/hunt/:id", function(req, res){
         db.Hunt
