@@ -95,8 +95,15 @@ export default {
 
     return axios({
       method: 'post',
-      url: '/api/saveScore',
+      url: '/api/score',
       data: scoreData
+    })
+  },
+
+  getScores: function(){
+    return axios({
+      method:'get',
+      url: '/api/score'
     })
   }
 

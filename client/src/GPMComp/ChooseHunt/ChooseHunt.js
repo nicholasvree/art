@@ -38,7 +38,7 @@ class ChooseHunt extends React.Component {
                 <div className="row">
                     <div className="col-md-6 text-center">
                     <h1> Reflect </h1>
-                        <Button onClick={this.props.toGPMC} value="reflect">Reflect</Button>
+                        <Button onClick={this.props.toReflect} value="101">Reflect</Button>
                     </div>
                 </div>
                 <div className="row">
@@ -46,6 +46,14 @@ class ChooseHunt extends React.Component {
                     <h1> Art Collector </h1>
                         <Button onClick={this.props.toGPMC} value="collection">See My Art</Button>
                         <Button onClick={this.props.toGPMC} value="collector">Get Art</Button>
+
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6 text-center">
+                    <h1> Scores </h1>
+                    <Button onClick={this.props.toGPMC} value="blogScores">Scores</Button>
+                    
 
                     </div>
                 </div>

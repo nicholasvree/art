@@ -21,19 +21,40 @@ module.exports = function(app) {
 
 //Retrieves Hunt with populated Clues
     app.get("/api/hunt/:huntId", function(req, res){
+        console.log("CALLED")
         db.Hunt
         .find({category: req.params.huntId})
         .populate("clue")
         .then(function(dbHunt){
+            console.log("HUNT", dbHunt)
             res.json(dbHunt)
         })
         .catch(function(err){
+            console.log("err", err)
             res.json(err)
         })
     })
 
+    app.get('/api/score', function(req,res){
+        console.log("ZZZZZZZZZZZZ ALLLLEEDD")
+        db.User
+        .findOne({_id: req.session.passport.user})
+        .populate("score")
+        .then(dbUser => {
+            console.log("USER SCORES", dbUser)            
+            res.json(dbUser)
+        })
+        .catch(function(err){
+            console.log("ERRRRR", err)
+            res.json(err)
+        })
+    })
+    
+
+
+
 //On completing a Hunt, saves score to database for user
-    app.post('/api/saveScore', function(req, res){
+    app.post('/api/score', function(req, res){
         db.Score
         .create(req.body)
         .then(function(dbScore){
@@ -41,6 +62,7 @@ module.exports = function(app) {
             return db.User.findOneAndUpdate({_id: req.session.passport.user}, {$push: {score: dbScore._id}}, {new: true});
         })
         .catch(function(err){
+            console.log(err)
             res.json(err)
         })
     })
@@ -85,15 +107,18 @@ app.get('/api/saveimage', function(req, res){
 
 //POSTMAN WAY to post Clues
     app.post("/api/clue/:huntId", function(req, res){
-
+        
+        console.log(req.body)
 
         db.Clue
         .create(req.body)
         .then(function(dbClue){
+            console.log("DBCLUE", dbClue)
             res.json(dbClue)
              return db.Hunt.findOneAndUpdate({ category: req.params.huntId }, {$push: {clue: dbClue._id }}, { new: true });
         })
         .catch(function(err){
+            console.log(err)
             res.json(err)
         })
     })

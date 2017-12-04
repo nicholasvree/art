@@ -26,6 +26,7 @@ class Collector extends React.Component {
   handleImageSave = (event) => {
 
       event.preventDefault()
+      console.log("clicked")
       let imageValue = event.target.value.split("|")
       
       API.saveImage({brook_id: imageValue[0], title:imageValue[1], primary_image:imageValue[2]})
@@ -34,7 +35,7 @@ class Collector extends React.Component {
   render() {
     let retrievedPictureBoxes=this.state.retrievedImages.map( image =>{   
             return(
-                <PictureBox image={image} openModal={this.openModal} closeModal={this.closeModal} processAnswer={this.handleImageSave} />
+                <PictureBox image={image} openModal={this.openModal} closeModal={this.closeModal} handleFlow={this.handleImageSave} />
             ) 
         })
     

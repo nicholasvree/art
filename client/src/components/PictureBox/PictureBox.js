@@ -19,10 +19,10 @@ class PictureBox extends React.Component {
     }
 
     let handleFlow
-    if(this.props.qButton === "Start Game"){
-        ""
+    if(this.props.qButton === "Start Game" ){
+        handleFlow=""
     }else{
-        this.props.processAnswer
+        handleFlow=this.props.processAnswer
     }
 
     

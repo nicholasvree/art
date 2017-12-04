@@ -1,37 +1,53 @@
 
 import React from 'react';
+import ReactDOM from'react-dom'
 import {Carousel} from 'react-bootstrap'
+import Reflect from '../../GPMComp/Reflect/Reflect'
 import './ImgCarousel.css'
 
 class ImgCarousel extends React.Component {
 
+    state={
+      index: 0,
+      direction: null,
+    }
+
+
+    handleSelect(selectedIndex, e) {
+      this.props.handleSelectParent(selectedIndex)
+      this.setState({
+        index: selectedIndex,
+        direction: e.direction
+      });
+    }
+    
   render() {
+
     return (
-        <Carousel>
+      <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={this.handleSelect.bind(this)}>
         <Carousel.Item>
-          <img width={200} height={100} alt="600x300" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/51.197.1.jpg" />
+          <img   alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/2008.6a-j_PS4.jpg" />
           <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            NO CAPTION
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img width={200} height={100} alt="600x300" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/51.197.1.jpg" />
+          <img  alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/2008.51_PS6.jpg" />
           <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          NO CAPTION
+        
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img width={200} height={100} alt="600x300" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/51.197.1.jpg" />
+          <img alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/CUR.2014.65_Alexander_Gray_Associates_photograph.jpg" />
           <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+          NO CAPTION
+          
           </Carousel.Caption>
         </Carousel.Item>
-        </Carousel>
+      </Carousel>
     );
   }
-}
+};
 
 export default ImgCarousel;
