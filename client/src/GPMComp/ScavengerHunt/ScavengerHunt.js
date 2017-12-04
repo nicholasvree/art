@@ -1,6 +1,6 @@
 import React from 'react';
 import './ScavengerHunt.css'
-import Modal from '../../components/Modal/Modal'
+import Modal from 'react-responsive-modal';
 import API from '../../utils/API'
 import QBox from '../../components/QBox/QBox'
 import PictureBox from '../../components/PictureBox/PictureBox'
@@ -16,19 +16,23 @@ class ScavengerHunt extends React.Component {
                 score:0
              };
 
+    checkState(state) {
+                console.log(state)
+            }
+
 /////////////////Modal////////////////
-    openModal = event => {
+    onOpenModal = event => {
         let imageId=event.target.value
         API.getImageInfo(imageId)
-        .then(res => {this.setState({selectedImageInfo: res.data.data, isOpen: !this.state.isOpen})})
+        .then(res => {this.setState({selectedImageInfo: res.data.data, isOpen: true})})
         .catch(err => console.log(err))
     };
 
-    closeModal = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
-    }
+    onCloseModal = () => {
+        this.setState({ isOpen: false });
+        console.log("close clicked")
+      };
+
 ////////////GENERAL///////////////////////
     getSafe(fn) {
         try {
@@ -38,13 +42,16 @@ class ScavengerHunt extends React.Component {
         }
     }
 
+
+
     render() {
     const collectedImages = this.props.collectedImages
     const elementImages = collectedImages.map(image => {    
         return(
-            <PictureBox image={image} openModal={this.openModal} closeModal={this.closeModal} processAnswer={this.props.processAnswer} />
+            <PictureBox image={image} openModal={this.onOpenModal} processAnswer={this.props.processAnswer} />
         ) 
     }) 
+
 
     console.log("SCVNGHJSS", this.state)
         return (
@@ -61,8 +68,8 @@ class ScavengerHunt extends React.Component {
                 </div>
             </div>
             
-            <Modal show={this.state.isOpen}
-                        onClose={this.closeModal}>
+            <Modal open={this.state.isOpen} onClose={this.onCloseModal}>
+                        <button onClick={this.props.onClose}>x</button>
                         <div className="container">
                         <div className="row">
                             <div className="col-md-4 text-center">
@@ -70,7 +77,7 @@ class ScavengerHunt extends React.Component {
                                 {/* Needs to be parsed into HTML? */}
                                 <p className="caption">{ this.getSafe( () =>  this.state.selectedImageInfo.images[0].caption) }</p>
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-4">
                                 <h1> {this.getSafe ( () => this.state.selectedImageInfo.title)} </h1>
                                     <h3> {this.getSafe( () => this.state.selectedImageInfo.artists[0].name)} </h3> 
                                     <h5> {this.getSafe( () => this.state.selectedImageInfo.artists[0].dates)}</h5> 

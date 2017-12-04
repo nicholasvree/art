@@ -9,6 +9,32 @@ import "./NavBar.css";
 class NavBar extends React.Component {
   
     render() {
+
+      let logParts 
+      if(this.props.userEmail){  
+          logParts=(
+            <ul className="nav navbar-nav pull-right" >
+              <li className={window.location.pathname === "/statistics" ? "active" : ""}>
+              <Link to="/" onClick = {this.props.handleLogoutSubmit}>Logout</Link>
+            </li>
+            </ul>)
+}
+        else{
+          logParts=(
+          <ul className="nav navbar-nav pull-right" >
+
+          <li className={window.location.pathname === "/login" ? "active" : ""}>
+            <Link to="/login">Login</Link>
+          </li>
+          <li className={window.location.pathname === "/register" ? "active" : ""}>
+            <Link to="/register">Register</Link>
+          </li>
+          </ul>)
+      }
+
+      console.log(logParts)
+      
+
   
       return (
 
@@ -25,18 +51,8 @@ class NavBar extends React.Component {
         >
           <Link to="/gameplay">Game Play</Link>
         </li>
-        <li className={window.location.pathname === "/statistics" ? "active" : ""}>
-          <Link to="/search">Statistics</Link>
-        </li>
-        <li className={window.location.pathname === "/login" ? "active" : ""}>
-          <Link to="/login">Login</Link>
-        </li>
-        <li className={window.location.pathname === "/register" ? "active" : ""}>
-          <Link to="/register">Register</Link>
-        </li>
       </ul>
-      {this.props.userEmail}
-      <button onClick={this.props.handleLogoutSubmit}>LOGOUT</button>
+        {logParts}
     </div>
     <div className="container-fluid">
       

@@ -15,13 +15,22 @@ class QBox extends Component {
   }
 
 
+
+
   render() {
 
     // let qDisplay=this.getSafe( () => this.props.hunt[0].clue[this.props.currentClue].clue)
-
+    let topStyles={
+      marginTop:20,
+      maxWidth:1000
+    }
+  
+    let affixedStyles={
+      minWidth:800
+    }
     return (
-      <div className='affixed-question'>
-        <Affix viewportOffsetTop={0} container={this} autoWidth={false}>
+      <div className='affixed-question' style={topStyles}>
+        <Affix offsetTop={65} affixStyle={{minWidth:1000, marginTop:10}} viewportOffsetTop={0} container={this} autoWidth={false}>
           <div className='panel panel-default'>
             <div className='panel-body'>
               <div className="row">
