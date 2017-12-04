@@ -16,6 +16,8 @@ class ScavengerHunt extends React.Component {
                 score:0
              };
 
+
+
     checkState(state) {
                 console.log(state)
             }
@@ -45,6 +47,7 @@ class ScavengerHunt extends React.Component {
 
 
     render() {
+    const deleteMe
     const collectedImages = this.props.collectedImages
     const elementImages = collectedImages.map(image => {    
         return(
