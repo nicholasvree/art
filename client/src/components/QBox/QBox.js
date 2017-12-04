@@ -29,8 +29,8 @@ class QBox extends Component {
       minWidth:800
     }
     return (
-      <div className='affixed-question' style={topStyles}>
-        <Affix offsetTop={65} affixStyle={{minWidth:1000, marginTop:10}} viewportOffsetTop={0} container={this} autoWidth={false}>
+      <div className='affixed-question'>
+        <Affix offsetTop={65} affixStyle={{minWidth:1000, marginTop:10}}  topStyle={topStyles} viewportOffsetTop={0} container={this} autoWidth={false}>
           <div className='panel panel-default'>
             <div className='panel-body'>
               <div className="row">
