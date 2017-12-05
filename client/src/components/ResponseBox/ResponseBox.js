@@ -5,9 +5,7 @@ class ResponseBox extends React.Component {
   
 
     state = {
-     
             value: ''
-     
     }
   
     handleInputChange = event => {
