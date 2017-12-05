@@ -14,4 +14,4 @@ const props = {
   onDraw: () => { console.log('i have drawn!'); },
 };
 
-const App = () => <ReactPaint {...props} />;
+const ReactPaint = () => <ReactPaint {...props} />;

@@ -5,41 +5,36 @@ import API from "../../utils/API";
 class BlogScores extends React.Component {
 
     state={
-        userScores:[]
 
     }
 
     componentDidMount(){
-        API.getScores()
-        .then(res => {
-          console.log(res.data.score)
-          this.setState({userScores: res.data.score})
-        })
+
       }
-
-    
- 
-
-
-
-    
 
   render() {
     let imgStyles={
         maxWidth:250,
         maxHeight:250
     }
-    let scoreSet = this.state.userScores.reverse().map(score =>{
+
+    
+
+    let scoreSet = this.props.userScores.reverse().map(score =>{
         if(score.type === "reflect"){
             return(
                 <div className="row" key={score._id}>
                     <div className="col-md-12">
-                        <h3>{"Reflection "+score.date}</h3>
-                        <img  style={imgStyles} alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/2008.51_PS6.jpg" />
+                    <div className="panel panel-default text-center" style={{borderColor:"light grey", borderWidth:"thin"}}>
+
+                        <h3>{"Reflection "}</h3>
+                        <h4>{score.date}</h4>
+                        <img  style={imgStyles} alt="900x500" src={score.src}/>
                         <p><b>Question</b></p>
                         <p>{score.question}</p>
                         <p><b>Answer</b></p>
                         <p>{score.response}</p>
+                        </div>
                     </div>
                 </div>
             )
@@ -48,11 +43,15 @@ class BlogScores extends React.Component {
             return(
                 <div className="row" key={score._id}>
                     <div className="col-md-12">
-                        <h3>{"Scavenger Hunt "+score.date}</h3>
+                    <div className="panel panel-default text-center" style={{borderColor:"light grey", borderWidth:"thin"}}>
+
+                        <h3>{"Scavenger Hunt "}</h3>
+                        <h4>{score.date}</h4>
                         <p><b>Total Correct</b></p>
                         <p>{score.total_correct}</p>
                         <p><b>Answer</b></p>
                         <p>{score.total_questions}</p>
+                    </div>
                     </div>
                 </div>
             )

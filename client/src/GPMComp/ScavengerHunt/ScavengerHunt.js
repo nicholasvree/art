@@ -50,7 +50,7 @@ class ScavengerHunt extends React.Component {
     const collectedImages = this.props.collectedImages
     const elementImages = collectedImages.map(image => {    
         return(
-            <PictureBox image={image} openModal={this.onOpenModal} processAnswer={this.props.processAnswer} />
+            <PictureBox activeComp={this.props.activeComp} image={image} openModal={this.onOpenModal} processAnswer={this.props.processAnswer} />
         ) 
     }) 
 
@@ -61,7 +61,7 @@ class ScavengerHunt extends React.Component {
             <div className="container">
                 <div className="row">
                 <div className="col-md-11">
-                <QBox hunt={this.props.hunt} currentClue={this.props.currentClue} gameOver={this.props.gameOver} qDisplay={this.props.qDisplay}  qButton={this.props.qButton} handleQBoxButton={this.props.handleQBoxButton}/>
+                <QBox activeComp={this.props.activeComp} hunt={this.props.hunt} currentClue={this.props.currentClue} gameOver={this.props.gameOver} qDisplay={this.props.qDisplay}  qButton={this.props.qButton} handleQBoxButton={this.props.handleQBoxButton}/>
                 </div>
                 </div>
 

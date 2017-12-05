@@ -10,12 +10,14 @@ class NavBar extends React.Component {
   
     render() {
 
+
+
       let logParts 
       if(this.props.userEmail){  
           logParts=(
             <ul className="nav navbar-nav pull-right" >
               <li className={window.location.pathname === "/statistics" ? "active" : ""}>
-              <Link to="/" onClick = {this.props.handleLogoutSubmit}>Logout</Link>
+              <Link to="/login" onClick = {this.props.handleLogoutSubmit}>Logout</Link>
             </li>
             </ul>)
 }
@@ -38,19 +40,14 @@ class NavBar extends React.Component {
   
       return (
 
-  <nav className="navbar navbar-default">
+  <nav className="navbar navbar-inverse" >
     <div className="container-fluid">
       <div className="navbar-header">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" Link onClick={this.forceUpdate} to={'/gameplay'} >
           ArtHunt
         </Link>
       </div>
       <ul className="nav navbar-nav">
-        <li
-          className={window.location.pathname === "/gameplay" ? "active" : ""}
-        >
-          <Link to="/gameplay">Game Play</Link>
-        </li>
       </ul>
         {logParts}
     </div>

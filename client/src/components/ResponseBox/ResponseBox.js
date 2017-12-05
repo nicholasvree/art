@@ -19,17 +19,27 @@ class ResponseBox extends React.Component {
 
 
   render() {
+
+    let space={
+      marginTop:20,
+      marginBottom:20,
+      minWidth:"100%"
+    }
       
    return (
-      <div>
-        <FormGroup controlId="formBasicText">
-        <FormControl
-            type="text"
+      <div >
+        <textarea
+            className={"form-control"}
+            style={{borderColor:"orange", borderWidth:"medium"}}
+            style={space}
+            rows={10}
+            componentClass="textarea"                
+            type="textarea"
             name="selectedIndex0"
             value={this.props.selectedIndex0}
-            placeholder="Enter text"
+            placeholder="Write Response Here"
             onChange={this.props.handleInputChange}/>
-        </FormGroup>
+        
       </div>
     );
   }

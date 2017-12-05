@@ -5,58 +5,84 @@ import { ButtonGroup, Button} from 'react-bootstrap'
 
 
 
+
 class ChooseHunt extends React.Component {
 
 
     render() {
 
+
+        let headingStyle ={
+            fontSize: "30",
+            color: "#EAA047"
+        }
+
         console.log(this.props.huntList)
 
-        var catOpElements = this.props.huntList.map(cat => {    
+        var scavengerOptions = this.props.huntList.map(cat => {    
             return(<CategoryOp cat={cat} startCategory={this.props.startCategory} />)
              
         }) 
 
+        let backgroundImg ={
+            backgroundImage: "url(http://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size4/CUR.2003.16_Candida_Hofer_VG_Bild-Kunst_photo.jpg)",
+            backgroundPosition: "center",
+            minHeight:"100px"
+        }
+
         //console.log(catOpElements)
 
         return (
-
+           
+            <div style={backgroundImg}>
+            
             <div className="container">
                 <div className="row">
-                    <div className="col-md-6 text-center">
-                    <h1> Choose a Scavenger Hunt Category: </h1>
+                <div className="col-md-3 text-center"></div>
 
-                        <ButtonGroup>{catOpElements}</ButtonGroup>
+                    <div className="col-md-6 text-center">
+                    
+                    <h1 style={headingStyle}> Scavenger Hunt </h1>
+                        {scavengerOptions}
                     </div>
                 </div>
                 <div className="row">
+                <div className="col-md-3 text-center"></div>
+
                     <div className="col-md-6 text-center">
-                    <h1> Draw </h1>
-                        <Button onClick={this.props.toGPMC} value="draw">Draw</Button>
+                    <h1 style={headingStyle}> Draw </h1>
+                        <button className={"btn btn-lg"} style={{marginLeft:"10px", backgroundColor:"darkgrey"}} onClick={this.props.toGPMC} value="draw">Draw</button>
                     </div>
                 </div>
                 <div className="row">
+                <div className="col-md-3 text-center"></div>
+
                     <div className="col-md-6 text-center">
-                    <h1> Reflect </h1>
-                        <Button onClick={this.props.toReflect} value="101">Reflect</Button>
+                    <h1 style={headingStyle}> Reflect </h1>
+                        <button className={"btn btn-lg"} style={{marginLeft:"10px", backgroundColor:"darkgrey"}} onClick={this.props.toReflect} value="101">Reflect</button>
                     </div>
                 </div>
                 <div className="row">
+                <div className="col-md-3 text-center"></div>
+
                     <div className="col-md-6 text-center">
-                    <h1> Art Collector </h1>
-                        <Button onClick={this.props.toGPMC} value="collection">See My Art</Button>
-                        <Button onClick={this.props.toGPMC} value="collector">Get Art</Button>
+                    <h1 style={headingStyle} > Art Collector </h1>
+                        <button className={"btn btn-lg"} style={{marginLeft:"10px", backgroundColor:"darkgrey"}} onClick={this.props.toGPMC} value="collection">See My Art</button>
+                        <button className={"btn btn-lg"} style={{marginLeft:"10px", backgroundColor:"darkgrey"}} onClick={this.props.toGPMC} value="collector">Get Art</button>
 
                     </div>
                 </div>
                 <div className="row">
+                <div className="col-md-3 text-center"></div>
+
                     <div className="col-md-6 text-center">
-                    <h1> Scores </h1>
-                    <Button onClick={this.props.toGPMC} value="blogScores">Scores</Button>
+                    <h1 style={headingStyle}> Scores </h1>
+                    <button className={"btn btn-lg"} style={{marginLeft:"10px", backgroundColor:"darkgrey"}} onClick={this.props.toBlogScores} value="blogScores">Scores</button>
                     
 
                     </div>
                 </div>
+            </div>
             </div>
 
 

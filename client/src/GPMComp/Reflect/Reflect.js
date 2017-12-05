@@ -18,23 +18,33 @@ class Reflect extends React.Component {
 
 
   render() {
+
+    let spacer= {
+      marginTop:20,
+      padding:20
+    }
+
+    
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-11">
-                        <QBox hunt={this.props.hunt} currentClue={this.props.currentClue} gameOver={this.props.gameOver} qDisplay={this.props.qDisplay}  qButton={this.props.qButton} handleQBoxButton={this.props.handleQBoxButton}/>
-                        <h1> Reflect </h1>
-                        
-                        <ImgCarousel index={this.state.index} direction={this.state.direction} handleSelectParent={this.props.handleSelectParent}/>
-                        
-                        <ResponseBox selectedIndex={this.props.selectedIndex}
-                        selectedIndex0={this.props.selectedIndex0}
-                        selectedIndex1={this.props.selectedIndex1}
-                        selectedIndex2={this.props.selectedIndex2} 
-                        handleInputChange={this.props.handleInputChange}/>
-                        <Button onClick={this.props.backToChooseHunt} value="reflect">Back to Choose</Button>
+                        <QBox activeComp={this.props.activeComp} hunt={this.props.hunt} currentClue={this.props.currentClue} gameOver={this.props.gameOver} qDisplay={this.props.qDisplay}  qButton={this.props.qButton} handleQBoxButton={this.props.handleQBoxButton}/>                        
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-11">
+                        <ImgCarousel index={this.state.index} direction={this.state.direction} handleSelectParent={this.props.handleSelectParent}/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-11">
+                        <ResponseBox className={spacer} selectedIndex={this.props.selectedIndex}
+                        selectedIndex0={this.props.selectedIndex0}
+                        handleInputChange={this.props.handleInputChange}/>
+          </div>
+        </div>
+                        <Button onClick={this.props.backToChooseHunt} value="reflect">Back to Choose</Button>
       </div>
     );
   }

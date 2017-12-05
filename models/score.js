@@ -8,6 +8,7 @@ const scoreSchema = new Schema({
     total_questions: { type: String},
     question:{type:String},
     response: { type: String},
+    src: {type:String},
     hunt:[{
         type: Schema.Types.ObjectId,
         ref: "Hunt"

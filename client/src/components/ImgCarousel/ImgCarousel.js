@@ -23,27 +23,41 @@ class ImgCarousel extends React.Component {
     
   render() {
 
+    let imgStyles={
+      height:300,
+      maxWidth:"100%",
+      maxHeight:"200"
+    }
+
+    let carouselStyle={
+      maxWidth:"100%"
+    }
+
     return (
       <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={this.handleSelect.bind(this)}>
         <Carousel.Item>
-          <img   alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/2008.6a-j_PS4.jpg" />
-          <Carousel.Caption>
-            NO CAPTION
-          </Carousel.Caption>
+          <div className='row'>
+            <div className='col-md-4'></div>
+            <div className='col-md-4'>
+              <img style={imgStyles}  alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/2008.6a-j_PS4.jpg" />
+            </div>
+          </div>
         </Carousel.Item>
         <Carousel.Item>
-          <img  alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/2008.51_PS6.jpg" />
-          <Carousel.Caption>
-          NO CAPTION
-        
-          </Carousel.Caption>
+        <div className='row'>
+          <div className='col-md-4'></div>
+          <div className='col-md-4'>
+            <img  style={imgStyles} alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/2008.51_PS6.jpg" />
+          </div>
+        </div>
         </Carousel.Item>
         <Carousel.Item>
-          <img alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/CUR.2014.65_Alexander_Gray_Associates_photograph.jpg" />
-          <Carousel.Caption>
-          NO CAPTION
-          
-          </Carousel.Caption>
+        <div className='row'>
+          <div className='col-md-4'></div>
+          <div className='col-md-4'>
+          <img style={imgStyles} alt="900x500" src="https://d1lfxha3ugu3d4.cloudfront.net/images/opencollection/objects/size2/CUR.2014.65_Alexander_Gray_Associates_photograph.jpg" />
+          </div>
+        </div>
         </Carousel.Item>
       </Carousel>
     );
