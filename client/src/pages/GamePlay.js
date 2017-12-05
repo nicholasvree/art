@@ -228,7 +228,7 @@ class GamePlay extends React.Component {
         else if(this.props.activeComp === "scavHunt"){
             // <ScavengerHunt {...this.props} />
             activeCompElement = <ScavengerHunt
-                        activeComp={this.state.activeComp}
+                        activeComp={this.props.activeComp}
                         selectedCollection = {this.state.selectedCollection} 
                         collectedImages = {this.state.collectedImages} 
                         hunt = {this.state.hunt}
@@ -255,7 +255,7 @@ class GamePlay extends React.Component {
         }
         else if(this.props.activeComp==="reflect"){
             activeCompElement=<Reflect
-            activeComp={this.state.activeComp}
+            activeComp={this.prop.activeComp}
             backToChooseHunt={this.backToChooseHunt}
             handleSelectParent={this.handleSelectParent.bind(this)}
             handleInputChange={this.handleInputChange}
@@ -270,14 +270,14 @@ class GamePlay extends React.Component {
         }
         else if(this.props.activeComp==="collector"){
             activeCompElement=<Collector
-            activeComp={this.state.activeComp}
+            activeComp={this.props.activeComp}
             handleInputChange={this.handleInputChange}
             searchBoxValue={this.state.searchBoxValue}
             backToChooseHunt={this.backToChooseHunt}/>
         }
         else if(this.props.activeComp==="collection"){
             activeCompElement=<Collection
-            activeComp={this.state.activeComp}            
+            activeComp={this.props.activeComp}            
             backToChooseHunt={this.backToChooseHunt}/>
 
         }else if(this.props.activeComp==="blogScores"){
