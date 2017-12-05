@@ -21,7 +21,6 @@ import { Redirect } from "react-router-dom";
 class GamePlay extends React.Component {
 
     state = {
-        activeComp: "choose",
         selectedCollection: "",
         collectedImages: [],
         huntList: [],
@@ -52,6 +51,7 @@ class GamePlay extends React.Component {
 
 
     componentDidMount(){
+
 
         API.getHuntList()
         .then(res=>{
@@ -106,11 +106,13 @@ class GamePlay extends React.Component {
             )
         }
         else if (event.target.value === "Take Me There!"){
-            this.setState({activeComp:"blogScores", currentClue: 0})            
+            this.props.handleChangeActivity("blogScores")            
+            this.setState({currentClue: 0})            
             this.gameOver()
         }
         else if (event.target.value === "I'm Done"){
-             this.setState({activeComp:"blogScores", currentClue: 0})
+            this.props.handleChangeActivity("blogScores")            
+             this.setState({currentClue: 0})
             this.reflectDone()
         }
         else {
@@ -159,9 +161,10 @@ class GamePlay extends React.Component {
                 this.setState({hunt: res.data}, () => {
                     API.getCollectionImages(this.state.selectedCollection)
                     .then(res => {
+                        console.log("COLLECTED IMAGES", res)
                         this.setState({collectedImages : res.data.data})
                         this.setState({qDisplay: this.state.hunt[0].clue[0].clue, qButton: this.state.hunt[0].clue[0].button1})
-                        this.setState({activeComp:"scavHunt"})
+                        this.props.handleChangeActivity("scavHunt")
                     })
                     .catch(err =>console.log(err))
                 })
@@ -171,11 +174,12 @@ class GamePlay extends React.Component {
     }
 
     backToChooseHunt = () => {
-        this.setState({activeComp:"choose"})
+        this.props.handleChangeActivity("choose")
     }
 
     toGPMC = (event) => {
-        this.setState({activeComp:event.target.value})
+        console.log(event.target.value)
+        this.props.handleChangeActivity(event.target.value)
     }
 
     toReflect = (event) => {            
@@ -183,7 +187,7 @@ class GamePlay extends React.Component {
         .then(res=> {
             this.setState({hunt: res.data}, () => {
                 this.setState({qDisplay: this.state.hunt[0].clue[0].clue, qButton: this.state.hunt[0].clue[0].button1})
-                this.setState({activeComp:"reflect"})
+                this.props.handleChangeActivity("reflect")
             })
         })
         .catch(err =>console.log(err))          
@@ -197,7 +201,9 @@ class GamePlay extends React.Component {
         API.getScores()
         .then(res => {
           console.log(res.data.score)
-          this.setState({userScores: res.data.score, activeComp:"blogScores"})
+          this.setState({userScores: res.data.score},
+            this.props.handleChangeActivity("blogScores")
+        )
         })
 
     }
@@ -211,7 +217,7 @@ class GamePlay extends React.Component {
 
         let activeCompElement;
         
-        if(this.state.activeComp === "choose"){
+        if(this.props.activeComp === "choose"){
             activeCompElement = <ChooseHunt
                             huntList={this.state.huntList} 
                             startCategory={this.startCategory}
@@ -219,7 +225,8 @@ class GamePlay extends React.Component {
                             toReflect={this.toReflect}
                             toBlogScores={this.toBlogScores}/>  
         }
-        else if(this.state.activeComp === "scavHunt"){
+        else if(this.props.activeComp === "scavHunt"){
+            // <ScavengerHunt {...this.props} />
             activeCompElement = <ScavengerHunt
                         activeComp={this.state.activeComp}
                         selectedCollection = {this.state.selectedCollection} 
@@ -234,19 +241,19 @@ class GamePlay extends React.Component {
                         handleQBoxButton = {this.handleQBoxButton}
                         />
         }
-        else if(this.state.activeComp === "score"){
+        else if(this.props.activeComp === "score"){
             activeCompElement=<HuntScore
                                 score={this.state.score}
                                 outOf={this.state.hunt[0].clue.length-2}
                                 backToChooseHunt={this.backToChooseHunt} />
 
         }
-        else if(this.state.activeComp==="draw"){
+        else if(this.props.activeComp==="draw"){
             activeCompElement=<Draw
                                 backToChooseHunt={this.backToChooseHunt}/>
 
         }
-        else if(this.state.activeComp==="reflect"){
+        else if(this.props.activeComp==="reflect"){
             activeCompElement=<Reflect
             activeComp={this.state.activeComp}
             backToChooseHunt={this.backToChooseHunt}
@@ -261,18 +268,19 @@ class GamePlay extends React.Component {
             handleQBoxButton = {this.handleQBoxButton}
             reflectDone = {this.reflectDone}/>
         }
-        else if(this.state.activeComp==="collector"){
+        else if(this.props.activeComp==="collector"){
             activeCompElement=<Collector
             activeComp={this.state.activeComp}
             handleInputChange={this.handleInputChange}
             searchBoxValue={this.state.searchBoxValue}
             backToChooseHunt={this.backToChooseHunt}/>
         }
-        else if(this.state.activeComp==="collection"){
+        else if(this.props.activeComp==="collection"){
             activeCompElement=<Collection
             activeComp={this.state.activeComp}            
             backToChooseHunt={this.backToChooseHunt}/>
-        }else if(this.state.activeComp==="blogScores"){
+
+        }else if(this.props.activeComp==="blogScores"){
             activeCompElement=<BlogScores
             backToChooseHunt={this.backToChooseHunt}
             userScores={this.state.userScores}
@@ -280,7 +288,7 @@ class GamePlay extends React.Component {
         }
             
 
-        console.log("ACTIVE", activeCompElement, "STATE", this.state.activeComp)
+        console.log("ACTIVE", activeCompElement, "STATE", this.props.activeComp)
 
 
         

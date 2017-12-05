@@ -16,9 +16,9 @@ class NavBar extends React.Component {
       if(this.props.userEmail){  
           logParts=(
             <ul className="nav navbar-nav pull-right" >
-              <li className={window.location.pathname === "/statistics" ? "active" : ""}>
-              <Link to="/login" onClick = {this.props.handleLogoutSubmit}>Logout</Link>
-            </li>
+              <li>
+                <Link to="/login" onClick = {this.props.handleLogoutSubmit}>Logout</Link>
+              </li>
             </ul>)
 }
         else{
@@ -40,16 +40,37 @@ class NavBar extends React.Component {
   
       return (
 
-  <nav className="navbar navbar-inverse" >
+  <nav className="navbar navbar-inverse">
     <div className="container-fluid">
-      <div className="navbar-header">
-        <Link className="navbar-brand" Link onClick={this.forceUpdate} to={'/gameplay'} >
+      <div className="navbar-header" style={{fontSize:"35px"}}>
+        <Link className="navbar-brand" to={'/gameplay'} >
+        <div style={{fontSize:"35px"}}>
           ArtHunt
+        </div>
         </Link>
       </div>
-      <ul className="nav navbar-nav">
-      </ul>
+      <div id="navbar" className="navbar-collapse collapse">
+        <ul className="nav navbar-nav">
+          <li>
+            <Link className="nav-link" to="/gameplay" onClick = {this.props.handleGoHome}>
+            Activities Center
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" to="/gameplay" onClick = {this.props.handleGoArtCollector}>
+            Find Art
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" to="/gameplay" onClick = {this.props.handleGoArtCollection}>
+            My Art Collection
+            </Link>
+          </li>
+        </ul>
+      
+
         {logParts}
+        </div>
     </div>
     <div className="container-fluid">
       

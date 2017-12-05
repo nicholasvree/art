@@ -29,7 +29,7 @@ class PictureBox extends React.Component {
     if(this.props.activeComp === "scavHunt"){
         button2=(<button className={"btn"} style={{marginLeft:"10px", backgroundColor:"darkgrey"}} bsSize="small" value={this.props.image.id+"|"+this.props.image.title+"|"+this.props.image.primary_image}  onClick={handleFlow} block>Select Answer</button>)
     }else if(this.props.activeComp === "collector"){
-        button2=(<button className={"btn"} style={{marginLeft:"10px", backgroundColor:"darkgrey"}} bsSize="small" value={this.props.image.id+"|"+this.props.image.title+"|"+this.props.image.primary_image}  onClick={handleFlow} block>Save Art</button>)
+        button2=(<button className={"btn"} style={{marginLeft:"10px", backgroundColor:"darkgrey"}} bsSize="small" value={this.props.image.id+"|"+this.props.image.title+"|"+this.props.image.primary_image}  onClick={this.props.processAnswer} block>Save Art</button>)
     }
     
     return (

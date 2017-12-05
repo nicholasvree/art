@@ -21,12 +21,12 @@ module.exports = function(app) {
 
 //Retrieves Hunt with populated Clues
     app.get("/api/hunt/:huntId", function(req, res){
-        console.log("CALLED")
+        console.log("HUNT RETRIEVE CALLED")
         db.Hunt
         .find({category: req.params.huntId})
         .populate("clue")
         .then(function(dbHunt){
-            console.log("HUNT", dbHunt)
+             console.log("HUNT", dbHunt)
             res.json(dbHunt)
         })
         .catch(function(err){

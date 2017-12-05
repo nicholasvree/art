@@ -2,3 +2,11 @@ navbar.navbar-default {
   background-color: #F8F8F8;
   border-color: #E7E7E7;
 }
+
+.navbar-header{
+  font-size:35px
+}
+
+.nav{
+  font-size:20px
+}
